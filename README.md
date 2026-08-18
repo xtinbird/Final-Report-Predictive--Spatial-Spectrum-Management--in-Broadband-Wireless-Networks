@@ -49,7 +49,7 @@ The system performs three complementary tasks:
 ## Data Sources
 
 - **Synthetic Data (Primary):**  
-  Generated to realistically simulate user mobility, signal conditions (RSRP, RSRQ, SINR), speed, direction, Doppler shift, beam indices, and multi-cell interference. Due to MATLAB licensing restriction, I use programming to generate the data. Detail please refer to xxxxx.
+  Generated to realistically simulate user mobility, signal conditions (RSRP, RSRQ, SINR), speed, direction, Doppler shift, beam indices, and multi-cell interference. Due to MATLAB licensing restriction, programming generated data is used. Detail please refer to https://github.com/xtinbird/Predictive--Spatial-Spectrum-Management--in-Broadband-Wireless-Networks/blob/main/Capstone_EDA_and_Baseline_Model.ipynb.
 
 - **Real-World Data (Validation):**  
   Public “Mobility Dataset from a 7.2 O-RAN deployment” containing real base-station measurements of RSRP, RSRQ, and SINR.  
