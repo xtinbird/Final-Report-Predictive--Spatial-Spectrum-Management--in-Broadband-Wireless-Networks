@@ -68,7 +68,7 @@ Using both data sources allows the system to be developed with rich features and
 - **LSTM** shows promising capability for forecasting future signal strength.
 - On real O-RAN data, the system achieved high precision (very few false alarms). This is valuable because unnecessary network changes are costly.
 - A performance gap exists between synthetic and real data (sim-to-real gap). This is expected and can be reduced by further training on real measurements.
-- A decision threshold around 0.40–0.45 provides a practical balance between catching high-risk users and limiting false alarms.
+- A decision threshold around 0.40–0.45 provides a practical balance between catching high-risk users and limiting false alarms. Detail please refer to section 6 in https://github.com/xtinbird/Predictive--Spatial-Spectrum-Management--in-Broadband-Wireless-Networks/blob/main/Capstone_EDA_and_Baseline_Model.ipynb
 
 ---
 
