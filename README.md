@@ -49,12 +49,12 @@ The system performs three complementary tasks:
 ## Data Sources
 
 - **Synthetic Data (Primary):**  
-  Generated to realistically simulate user mobility, signal conditions (RSRP, RSRQ, SINR), speed, direction, Doppler shift, beam indices, and multi-cell interference.
+  Generated to realistically simulate user mobility, signal conditions (RSRP, RSRQ, SINR), speed, direction, Doppler shift, beam indices, and multi-cell interference. Due to MATLAB licensing restriction, I use programming to generate the data. Detail please refer to xxxxx.
 
 - **Real-World Data (Validation):**  
   Public “Mobility Dataset from a 7.2 O-RAN deployment” containing real base-station measurements of RSRP, RSRQ, and SINR.  
   Source: https://data.mendeley.com/datasets/khxgr6m8wz/1
-
+  Real world data limitation due to security of the mobile network operators.
 Using both data sources allows the system to be developed with rich features and then validated under real network conditions.
 
 ---
