@@ -6,117 +6,130 @@
 
 ---
 
-## Project Summary
+## Executive Summary
 
-In dense urban mobile networks, users are constantly moving. To maintain fast and reliable connections, antenna beams must continuously track these users. When the network reacts too late, signal quality drops, users experience slower speeds, and interference between nearby users increases.
+- Mobile networks in dense urban areas struggle to maintain signal quality as users move.
+- This project builds a machine learning system that predicts signal strength, recommends the best antenna beam, and flags users at high risk of interference.
+- Models were trained on synthetic data and validated on real O-RAN measurements.
+- The best model (Random Forest) produces highly reliable high-risk alerts with very few false alarms.
+- A performance gap exists between synthetic and real data, but the system remains practically useful.
+- With further fine-tuning on real network data, this approach can support proactive and more efficient network management.
 
-This project develops a machine learning system that helps the network act **before** problems occur. The system forecasts future signal strength, recommends the best antenna beam in advance, and identifies users who are at high risk of interference.
-
-**Jupyter Notebook:** [01_EDA_and_Baseline_Model.ipynb](./01_EDA_and_Baseline_Model.ipynb)
+**Jupyter Notebook:** [Capstone_Final_and_Model_Comparision.ipynb](./Capstone_Final_and_Model_Comparision.ipynb)
 
 ---
 
 ## Business Problem
 
-Mobile operators in crowded city environments face three recurring challenges:
+In dense urban mobile networks, users move frequently and antenna beams must continuously track them. When the network reacts too late:
 
-- Users move quickly between coverage areas
-- Antenna beams must constantly adjust
-- Interference rises when the network only reacts after signal quality has already declined
+- Signal quality drops
+- Interference increases
+- User experience degrades
 
-If left unsolved, these issues lead to poorer user experience, lower data speeds, and inefficient use of limited radio spectrum.
-
-**Project Goal:**  
-Build a proactive machine learning pipeline that predicts signal problems early and supports smarter network decisions.
+This project develops a proactive machine learning pipeline to address these challenges.
 
 ---
 
-## How the Solution Works
+## Project Goal
 
-The system performs three complementary tasks:
-
-1. **Forecasts future signal strength**  
-   Uses time-series models (including LSTM) to predict how signal quality is likely to change.
-
-2. **Recommends the optimal antenna beam**  
-   Predicts the best beam direction before the signal weakens.
-
-3. **Flags high-interference-risk users**  
-   Identifies users who are likely to experience or cause interference so the network can take protective action.
+Build a system that can:
+1. Forecast future signal strength
+2. Predict the optimal antenna beam in advance
+3. Identify users at high risk of interference
 
 ---
 
 ## Data Sources
 
 - **Synthetic Data (Primary):**  
-  Generated to realistically simulate user mobility, signal conditions (RSRP, RSRQ, SINR), speed, direction, Doppler shift, beam indices, and multi-cell interference. Due to MATLAB licensing restriction, programming generated data is used. Detail please refer to synthetic data section in https://github.com/xtinbird/Predictive--Spatial-Spectrum-Management--in-Broadband-Wireless-Networks/blob/main/Capstone_EDA_and_Baseline_Model.ipynb.
+  Generated in Python to simulate user mobility, multi-cell interference, RSRP, RSRQ, SINR, speed, heading, Doppler shift, beam indices, and resource block utilization.
 
 - **Real-World Data (Validation):**  
   Public “Mobility Dataset from a 7.2 O-RAN deployment” containing real base-station measurements of RSRP, RSRQ, and SINR.  
   Source: https://data.mendeley.com/datasets/khxgr6m8wz/1
-  Real world data limitation due to security of the mobile network operators.
-Using both data sources allows the system to be developed with rich features and then validated under real network conditions.
+
+---
+
+## Methods
+
+### Classification (High Interference Risk)
+- Random Forest
+- Decision Tree
+- Logistic Regression
+- K-Nearest Neighbors (KNN)
+
+### Regression (Next Beam Prediction)
+- Linear Regression
+- Random Forest Regressor
+- Decision Tree Regressor
+
+### Time-Series Forecasting
+- ARIMA
+- LSTM
+
+### Model Validation
+- Stratified K-Fold Cross-Validation
+- Grid Search hyperparameter tuning
+- Real O-RAN external validation
+- Decision threshold analysis
+
+---
+
+## Handling Imbalanced Data
+
+Class imbalance is an important challenge in this project, especially in the real O-RAN dataset, where Low Risk samples far outnumber High Risk samples.
+
+To address this, the following techniques were used:
+
+- **Stratified train-test splits and Stratified K-Fold Cross-Validation** to preserve class proportions during training and evaluation
+- **Class weighting (`class_weight="balanced"`)** in Random Forest, Logistic Regression, and Decision Tree models so the minority High Risk class receives greater emphasis
+- **Focus on Precision, Recall, and F1-Score** instead of Accuracy alone, because Accuracy can be misleading under imbalance
+- **Decision threshold tuning** on real data to improve the practical balance between detecting high-risk users and limiting false alarms
+
+These steps are especially important for real-world deployment, where high-risk events are rare but operationally important, and false alarms can be costly.
 
 ---
 
 ## Key Findings
 
 - **SINR** and **RSRP** are the strongest predictors of high-interference risk.
-- Signal quality clearly declines as users move away from base stations or travel between cells.
-- **Random Forest** performed best among classification models for detecting high-risk users.
-- Tree-based models outperformed simple Linear Regression when predicting the next antenna beam.
-- **LSTM** shows promising capability for forecasting future signal strength.
-- On real O-RAN data, the system achieved high precision (very few false alarms). This is valuable because unnecessary network changes are costly.
-- A performance gap exists between synthetic and real data (sim-to-real gap). This is expected and can be reduced by further training on real measurements.
-- A decision threshold around 0.40–0.45 provides a practical balance between catching high-risk users and limiting false alarms. Detail please refer to "6. Test Multiple Thresholds" in https://github.com/xtinbird/Predictive--Spatial-Spectrum-Management--in-Broadband-Wireless-Networks/blob/main/Capstone_EDA_and_Baseline_Model.ipynb
+- On synthetic data, tree-based models achieved near-perfect classification performance.
+- For beam prediction, the tuned **Random Forest Regressor** performed best (lowest MAE).
+- ARIMA provided a solid baseline for SINR forecasting; LSTM was also explored.
+- On real O-RAN data:
+  - Precision was extremely high (≈ 0.998)
+  - Recall was moderate (≈ 0.55)
+  - F1-Score was approximately 0.71
+- A clear **sim-to-real gap** exists, which is expected when moving from simulation to real measurements.
+- A decision threshold between **0.40 and 0.50** offers the best practical balance.
+- The model remains useful in practice because its High Risk predictions are highly reliable.
 
 ---
 
 ## Business Recommendations
 
-1. **Flag high-risk users early**  
-   Use the model to identify potential interference problems before customers experience degraded service.
-
-2. **Prefer high-confidence alerts**  
-   High precision is more valuable than catching every possible case, because false alarms waste network resources.
-
-3. **Keep SINR and RSRP as core inputs**  
-   These signal measures consistently provide the most useful information.
-
-4. **Combine forecasting, beam prediction, and risk detection**  
-   Integrating these capabilities into one pipeline will deliver greater operational value.
+1. Use the model to flag high-risk users early, before service quality drops.
+2. Trust high-precision alerts to avoid unnecessary network interventions.
+3. Keep SINR and RSRP as core input features.
+4. Operate with a decision threshold around 0.40–0.50.
+5. Integrate forecasting, beam prediction, and risk detection into one pipeline.
 
 ---
 
 ## Next Steps
 
-- Fine-tune the best models on more real network data to reduce the sim-to-real gap
-- Improve multi-step signal strength forecasting using LSTM
-- Integrate all components (forecasting + beam prediction + risk detection) into a single operational pipeline
-- Measure business impact using simple metrics such as reduction in interference events or improvement in average user speed
+- Fine-tune the best model on real O-RAN measurements to reduce the sim-to-real gap.
+- Improve synthetic data realism (for example, using MATLAB’s 5G Toolbox).
+- Obtain richer real-world data from a professional network or operator testbed.
+- Enhance multi-step signal strength forecasting.
+- Connect model outputs to network control systems for automated action.
+- Measure impact using operational metrics such as reduced interference events or improved user throughput.
 
 ---
 
-## Technical Overview
+## How to Run
 
-The full technical analysis is available in the Jupyter Notebook linked above. It includes:
-
-- Data cleaning and exploratory analysis
-- Feature engineering
-- Multiple classification and regression models
-- Cross-validation and Grid Search
-- Real-world validation
-- LSTM and ARIMA signal forecasting experiments
-
-**Main models evaluated:**
-- Classification: Random Forest, KNN, Logistic Regression, Decision Tree
-- Regression: Linear Regression, Random Forest Regressor, Decision Tree Regressor
-- Forecasting: ARIMA and LSTM
-
----
-
-## How to Explore This Project
-
-1. Read this README for the business summary and findings
-2. Open `01_EDA_and_Baseline_Model.ipynb` for the complete technical analysis
-3. Run the notebook cells in order
+1. Clone this repository
+2. Open `Capstone_Final_and_Model_Comparision.ipynb`
+3. Run all cells in order
