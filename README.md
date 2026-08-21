@@ -98,9 +98,10 @@ These steps are especially important for real-world deployment, where high-risk 
 - For beam prediction, the tuned **Random Forest Regressor** performed best (lowest MAE).
 - ARIMA provided a solid baseline for SINR forecasting; LSTM was also explored.
 - On real O-RAN data:
-  - Precision was extremely high (≈ 0.998)
+  - Precision was extremely high (≈ 0.998–1.000)
   - Recall was moderate (≈ 0.55)
   - F1-Score was approximately 0.71
+- Additional hyperparameter optimization did not improve real-world recall, suggesting the main limitation is the sim-to-real gap and limited shared features rather than model settings alone.
 - A clear **sim-to-real gap** exists, which is expected when moving from simulation to real measurements.
 - A decision threshold between **0.40 and 0.50** offers the best practical balance.
 - The model remains useful in practice because its High Risk predictions are highly reliable.
