@@ -6,9 +6,14 @@
 
 ---
 
+<details>
+<summary><b>📊 Click to view Dashboard & UI Preview</b></summary>
+
 <p align="center">
   <img src="assets/dashboard_preview.png" alt="Signal & Mobility Visualizer UI" width="100%">
 </p>
+
+</details>
 
 ---
 
