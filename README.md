@@ -1,8 +1,14 @@
-# Final Report Predictive Spatial Spectrum Management in Broadband Wireless Networks
+# Final Report: Predictive Spatial Spectrum Management in Broadband Wireless Networks
 
 **UC Berkeley Professional Certificate in Machine Learning and Artificial Intelligence**
 
 **Required Capstone Project 24.1: Final Report**
+
+---
+
+<p align="center">
+  <img src="assets/dashboard_preview.png" alt="Signal & Mobility Visualizer UI" width="100%">
+</p>
 
 ---
 
@@ -47,7 +53,7 @@ Build a system that can:
 
 - **Real-World Data (Validation):**  
   Public “Mobility Dataset from a 7.2 O-RAN deployment” containing real base-station measurements of RSRP, RSRQ, and SINR.  
-  Source: https://data.mendeley.com/datasets/khxgr6m8wz/1
+  Source: [Mendeley Data - O-RAN Mobility Dataset](https://data.mendeley.com/datasets/khxgr6m8wz/1)
 
 ---
 
@@ -132,5 +138,6 @@ These steps are especially important for real-world deployment, where high-risk 
 ## How to Run
 
 1. Clone this repository
-2. Open `Capstone_Final_and_Model_Comparision.ipynb`
-3. Run all cells in order
+2. Ensure you have an `assets/` folder containing your `dashboard_preview.png` image for the visualizer preview.
+3. Open `Capstone_Final_and_Model_Comparision.ipynb`
+4. Run all cells in order
