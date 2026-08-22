@@ -17,6 +17,14 @@
 
 ---
 
+---
+
+## Research Question & Motivation
+
+> **Research Question:** How can a machine learning pipeline that forecasts user mobility patterns and classifies spatial proximity enable proactive beam alignment and orthogonal spectrum allocation in dense urban broadband wireless networks to minimize co-channel interference and maximize throughput?
+
+Modern wireless networks are increasingly congested as devices rely heavily on high-speed mobile broadband for work, streaming, and smart-city applications. Without proactive tools to predict user trajectories and interference risks, networks waste spectrum, drop signals, and require expensive infrastructure expansion. This project addresses this by demonstrating how network operators can use predictive analytics to steer antenna beams ahead of time—delivering faster, more reliable service without building more towers or buying more spectrum.
+
 ## Executive Summary
 
 - Mobile networks in dense urban areas struggle to maintain signal quality as users move.
