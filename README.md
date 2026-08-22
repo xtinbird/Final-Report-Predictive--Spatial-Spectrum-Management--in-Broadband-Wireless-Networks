@@ -148,6 +148,13 @@ These steps are especially important for real-world deployment, where high-risk 
 
 ---
 
+## Project History & Milestones
+
+This capstone project was developed iteratively across the UC Berkeley program. You can view the earlier exploratory data analysis and baseline model development here:
+- **Module 20.1 EDA & Baseline Report:** [GitHub Repository Link](https://github.com/xtinbird/Predictive--Spatial-Spectrum-Management--in-Broadband-Wireless-Networks)
+
+---
+
 ## How to Run
 
 1. Clone this repository
